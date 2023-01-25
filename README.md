@@ -1,9 +1,9 @@
 # Module-21-Challenge
-# KaseiCoin 
+# KaseiCoin Crowdsale Deployer
 
 
 <p align= "left" width="100">
-<img width= "30%" src="Starter_Code/Images/20-5-challenge-image.png">
+<img width= "30%" src="Instructions/Images/application-image.png">
 </p>
 
 ---
@@ -14,7 +14,7 @@
 
 ## <b>Purpose:</b>
 
-The purpose of this program is to code a Smart Contract that serves as a joint savings decentralized Ethereum account. The intention is to automate the process & features of a standard joint savings account (from a conventional financial institution) as a cost savings initiative with the benefit of increased transparency, accountability & enhanced encrypted security. Specifically, the joint savings account will accept two user addresses which have control over said account. The main features in this contract will consist of the ability to deposit & withdraw funds from the main contract account in & out of the two designated ETH account addresses (accountOne & accountTwo). 
+The purpose of this software project is to develop a beta-tested monetary system for a fictitious Mars Colony economy. THe new monetary system will incorporate blockchain technology to create a new cryptocurrency named KaseiCoin. KaseiCoin will be a fungible token that is ERC-20 compliant. This project will enable distribution of KaseiCoin tokens via a crowdsale Solidity program where people can convert fiat -> ETH -> KaseiCoin (KSIC). 
 
 ---
 
@@ -22,138 +22,218 @@ The purpose of this program is to code a Smart Contract that serves as a joint s
 
 The sequence of steps in this project are as follows:
 <ol> 
-Step 1: Create a Joint Savings Account Contract in Solidity
+Step 1: Create the KaseiCoin token contract.
 <br>
-Step 2: Compile and Deploy Contract in JavaScript VM (Remix (Berlin) or (London))
+Step 2: Create the KaseiCoin crowdsale contract.
 <br>
-Step 3: Interacting with Deployed Smart Contract </ol>
+Step 3: Create the KaseiCoin deployer contract.
+<br>
+Step 4: Deploy the crowdsale to a local blockchain (Custom RPC Local Testnet w/ MetaMask as the Injected Provider).
+<br>
+Step 5: Optional: Extension of the crowdsale contract via OpenZeppelin imported contract inheritance. </ol>
 
 
-### <b><u>Step 1: Create a Joint Savings Account Contract in Solidity</b></u>
+### <b><u>Step 1: Create the KaseiCoin Token Contract</b></u>
 <br>
-i.) Create a new Solidity file in the Remix IDE named joint_savings.sol. 
+i.) Create a template KaseiCoin.sol starter file in the Remix IDE. 
 <br>
-ii.) Define a new contract called JointSavings. 
+ii.) Import the following contracts from the OpenZeppelin library:  
 <br>
-iii.) Define the following variables in the contract: 
-<br>
-<ol> 
-a.) Two variables of type 'address payable' named 'accountOne' and 'accountTwo'.
-<br>
-b.) A variable of type 'address public' named 'lastToWithDraw'.
-<br>
-c.) Two variables of type 'uint public' named 'lastWithdrawAccount' and 'contractBalance'. 
+<ol> a.) ERC20
+<br> b.) ERC20Detailed
+<br> c.) ERC20Mintable
 </ol>
-iv.) Define a function named 'withdraw' that accepts two arguments: 'amount' of type 'uint' & 'recipient' of type 'payable address'. In this function, create code as follows: 
-<ol> a.) Define a 'require' statement that checks if 'recipient' is equal to either 'accountOne' or 'accountTwo'. If it isn't, the require statement will return the "You don't own this account!" text.
+iii.) Define a contract for the KaseiCoin token named 'KaseiCoin' & have the contract inherit the three above listed imported contracts from OpenZeppelin.
 <br>
-b.) Define a 'require' statement that checks if balance is sufficient for accomplishing the withdrawal operation. If insufficient funds exist, it will return "Insufficient funds!" text.
+iv.) In the 'KaseiCoin' contract, a constructor with the following parameters is added: 'name', 'symbol', & 'initial_supply'. 
 <br>
-c.) Add an 'if' statement to check if lastToWithdraw is not equal to '(!=) recipient'. If it isn't equal, set it to the current value of 'recipient'.
+v.) In the constructor definition, a call to the constructor of the 'ERC20Detailed' contract is instantiated with 'name', 'symbol' and '18' (*18 = 'decimal' parameter) parameters are included. 
 <br>
-d.) Call the 'transfer()' function of the 'recipient', and pass it the 'amount' to transfer as an argument. 
+vi.) The contract is compiled via the 0.5.5 version of the compiler.
 <br>
-e.) Set 'lastWithdrawAmount' equal to 'amount'. 
-<br>
-f.) Set the 'contractBalance' variable equal to the balance of the contract by using 'address(this).balance' to reflect the new balance of the contract.
-<br></ol>
-v.) Define a 'public payable' function named 'deposit'. In this function, code is initiated as follows: 
-<br>
-<ol>a.) Set the 'contractBalance' variable equal to the balance of the contract by using 'address(this).balance'. 
-<br></ol>
-vi.) Define a 'public' function named 'setAccounts' that takes two 'address payable' arguments, named 'account1' and 'account2'. In the body of the function, set the values of 'accountOne' and 'accountTwo' to 'account1' and 'account2', respectively.
-<br>
-vii.) A fallback function is added so that the contract can store ETH that's sent from outside of the 'deposit' function.
-
 <br>
 
-### <u><b>Step 2: Compile and Deploy Contract in JavaScript VM (Remix (Berlin) or (London))</b></u>
-<br>
-i.) The smart contract is then check for errors & compiled. Any additional errors will be caught sequentially by the compiler. 
-<br>
-ii.) In Remix IDE, the 'Deploy & Run Transactions' pane is selected and the 'Remix (Berlin)' environment is set.
-<br>
-iii.) The deploy button is selected to deploy the smart contract.
 
+### <u><b>Step 2: Create the KaseiCoin Crowdsale Contract (KaseiCoinCrowdsale)</b></u>
+<br>
+i.) A KasieCoinCrowdsale.sol template file is initiated, again, in the Remix IDE.
+<br>
+ii.) The above contract file inherits the following OpenZeppelin contracts: 
+<br>
+<ol> a.) 'Crowdsale'
+<br> b.) 'MintedCrowdsale' </ol>
+<br>
+iii.) Within the 'KaseiCoinCrowdsale' constructor, the following parameters are provided as features to the crowdsale (i.e. 'rate, 'wallet' & 'token'). The 'wallet' will be the payable wallet where the deposited funds (in ETH/wei) will be sent. The 'token' will be associated with the KaseiCoin contract .sol file that creates the actual token to be sold at crowdsale.
+<br>
+iv.) The contract is compiled via the 0.5.5 version of the compiler.
+<br>
 <br>
 
-### <u><b>Step 3: Interacting with Deployed Smart Contract</b></u>
+### <u><b>Step 3: Create the KaseiCoin Deployer Contract (KaseiCoinCrowdsaleDeployer)</b></u>
 <br>
-Testing of the smart contract is then undertaken. After each function & class call button is initiated captured screenshots were produced in order to verify the correct functionality of the smart contract. These cropped .png images are collectively stored in the root 'Execution_Results' folder, and additionally, listed below.
+i.) Next, the 'KaseiCoinCrowdsaleDeployer' contract is generated within the 'KaseiCoinCrowdsale.sol' code.
+<br>
+ii.) Within the 'KaseiCoinCrowdsaleDeployer' contract, variables are added in order to store the addresses of the 'KaseiCoin' and 'KaseiCoinCrowdsale' contracts (which the 'KaseiCoinCrowdsaleDeployer' will inevitably be coded to deploy).
+<br>
+iii.) An 'address public' variable named 'kasei_token_address' is generated in order to store the 'KaseiCoin' address when the contract has been deployed.
+<br>
+iv.) An 'address public' variable named 'kasei_crowdsale_address' is generated in order to store the 'KaseiCoinCrowdsale' address when the contract has been deployed via the 'KaseiCoinCrowdsaleDeployer' contract. 
+<br>
+v.) The following parameters were then added to the 'KaseiCoinCrowdsaleDeployer' contract: 'name', 'symbol', & 'wallet'. 
+<br>
+vi.) The following additions are then coded into the constructor body of the 'KaseiCoinCrowdsaleDeployer' contract:
+<br>
+<ol> a.) A new instance of the 'KaseiCoin' token is instantiated by creating a 'token' object. It carries the 'name', 'symbol', and 'initial_supply' (where 'initial_supply' is swapped with '0' value as an initial variable value). 
+<br> b.) The address of the 'KaseiCoin' object 'token' is set to the 'kasei_token_address' variable.
+<br> c.) A new instance of the 'KaseiCoinCrowdsale' contract is instantiated as 'sale' object with the following parameters set: 
+<ul> 'rate': 'rate' is set to 1 to maintain parity with ether's wei.
+<br> 'wallet': 'wallet' is passed from the main constructor. This is the wallet where the crowdsale funds will be stored when raised.
+<br> 'token': 'token' is the variable where the newly instantiated KaseiCoin object is stored. 
+</ul> 
+<br>
+vii.) The address of the 'KaseiCoin' crowdsale contract is set to the 'kasei_crowdsale_address'. 
+<br>
+viii.) The 'KaseiCoinCrowdsale' contract is set as minter.
+<br>
+ix.) The 'KaseiCoinCrowdsaleDeployer' renounces its minter role.
+<br>
+x.) The contract is compiled via the 0.5.5 version of the compiler.
+</ol>
+<br>
+<br>
 
+### <u><b>Step 4: Deployment of the Crowdsale to a Local Blockchain</b></u>
+<br>
+i.) Deployment of the crowdsale to the local blockchain is accomplished using Remix, MetaMask & Ganache.
+<br>
+ii.) Functionality of the crowdsale is beta-tested by buying new tokens & then checking the balances of the payee & beneficiaries.
+<br>
+iii.) The total supply of the minted tokens & amount of wei the crowdsale contract has been raised is recorded & accounted for during testing.
+<br>
 <br>
 
-i.) Next, the 'setAccounts' function is called to define the authorized Ethereum addresses (for 'accountOne' & 'accountTwo'). The addresses can be simply copy/pasted from above on the environment contract dropdown menu. (Note: Each test ETH account should hold 100.0 ETH as default).
+### <u><b>Step 5: Extension of the Crowdsale Contract Via OpenZeppelin</b></u>
 <br>
-ii.) The 'deposit' functionality is then tested by sending the following amounts of ETH and recording screenshots of each transaction: 
+The following section enables enhanced functionality of the crowdsale by invoking additional imported contract features.
 <br>
-<ol> a.) Transaction 1: Send 1 ETH as Wei.
+i.) Three additional OpenZeppelin contracts are added to the 'KaseiCoinCrowdsale.sol' contract: 
 <br>
-b.) Transaction 2: Send 10 ETH as Wei. 
 <br>
-c.) Transaction 3: Send 5 ETH.
-<br></ol>
-iii.) Following each transactional step, the 'contractBalance', 'lastToWithdraw' & 'lastWithdrawAmount' functions are invoked to ensure the correct addresses & amounts have been called.
+<ol> import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v2.5.0/contracts/crowdsale/validation/CappedCrowdsale.sol";
+'CappedCrowdsale': This library contract enables the capping of the total amount of ETH that the crowdsale can raise. 
+<br>
+<br> import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v2.5.0/contracts/crowdsale/validation/TimedCrowdsale.sol";
+<br>
+'TimedCrowdsale': This library contract enables a set time limit for the crowdsale by adding both an opening & closing UNIX timestamp feature.
+<br>
+<br> import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/release-v2.5.0/contracts/crowdsale/distribution/RefundablePostDeliveryCrowdsale.sol";
+'RefundablePostDeliveryCrowdsale': This import adds the ability to refund investors of the crowdsale. (When the crowdsale is initially launched, the deployer is able to set the goal of the amount of ETH to be raised. If the user fails to achieve the target goal, the investors that did fund the crowdsale wallet, are refunded). </ol>
+<br>
+ii.) The 'KaseiCoinCrowdsale' contract then inherits the following three imported contracts listed & described above.
+<br>
+iii.) Additionally, within the 'KaseiCoinCrowdsale' constructor, the following parameters are added: 
+<br>
+<ol> uint goal: This variable represents the amount of ETH that is needed to be raised at a minimum during the crowdsale.
+<br> 
+uint open: This represents the opening time for the crowdsale.
+<br> 
+uint close: This variable represents the closing time for the crowdsale. </ol>
+<br>
+iv.) The 'KaseiCoinCrowdsale' constructor body code is modified as follows: 
+<br>
+<br>
+<i>
+constructor(<br>
+        &emsp; &emsp; uint256 rate, // rate in token bits <br>
+        &emsp; &emsp; address payable wallet, // sale beneficiary <br>
+        &emsp; &emsp; KaseiCoin token, // the KaseiCoin itself that the KaseiCoinCrowdsale will work with <br>
+        &emsp; &emsp; uint goal, // the crowdsale goal <br>
+        &emsp; &emsp; uint open, // the crowdsale opening time <br>
+        &emsp; &emsp; uint close // the crowdsale closing time <br>
+    &emsp;) public <br>
+        &emsp; &emsp; Crowdsale(rate, wallet, token) <br>
+        &emsp; &emsp; CappedCrowdsale(goal) <br>
+        &emsp; &emsp; TimedCrowdsale(open, close) <br>
+        &emsp; &emsp; RefundableCrowdsale(goal) <br>
+    &emsp; { <br>
+        // constructor can stay empty <br>
+    &emsp; } <br>
+</i>
+<br>
+
+v.) The 'KaseiCoinCrowdsaleDeployer' contract ultimately acts as an auto-deployer for the updated 'KaseiCoinCrowdsale' contract. Within the constructor of the deployer contract ('KaseiCoinCrowdsaleDeployer'), a new 'uint' parameter called 'goal' is added that enables the user/deployer to set the appropriate crowdsale goal. 
+<br>
+vi.) Next, the 'KaseiCoinCrowdsale' contract is then updated with the newly added imported contract features & associated parameters. The new finished object instantiation of a newly invoked 'KaseiCoinCrowdsale' contract appears as follows: 
+<br>
+<ol><i> KaseiCoinCrowdsale kasei_crowdsale = new KaseiCoinCrowdsale (1, wallet, token, goal, now, now + 10 minutes); </i></ol>
+<br>
+vii.) Finally, the updated contracts are finalized by completing the following: 
+<br>
+<ol> a.) The 'KaseiCoinCrowdsale' contract is again re-compiled and ETH is sent to the crowdsale from a different account to add to the fundraiser.
+<br> b.) The 'close' time is then set to 'now + 10 minutes' for beta-testing purposes.
+<br> c.) The minimum goal and cap targets (*Note: goal = 300 ETH for testing purposes) are then met by sending ETH from an external MetaMask account by using the Custom RPC local testnet. 
+<br> d.) Within MetaMask & Ganache, the ETH coin & KSIC token exchanges are then reviewed and confimed for correct functionality between all contributor/beneficiary accounts. </ol>
+<br>
 <br>
 
 ---
 
 ## <b>Results:</b>
 
-<u> 1.) Testing 'setAccounts' Functionality: </u>
+<u> 1.) Initial KaseiCoin Contract Compiled: </u>
 
   <p align= "left" width="60">
-  <img width= "100%" src="Starter_Code/Execution_Results/step3_1_setAccounts.png">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/1_KaseiCoin_contract_compiled.png">
   </p>
 
-  <i>The figure above demonstrates invoking the 'setAccounts()' function button to set 'accountOne = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2' & 'accountTwo = 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db' to their respective Remix (Berlin) test wallet addresses (index 1 & index 2, respectively).</i>
+  <i>Basic confirmed compiling of the standard KaseiCoin contract .</i>
   <br>
   <br>
 
-<u> 2.) Testing 'deposit()' Functionality (Transaction 1: Send 1 ETH as Wei): </u>
+<u> 2.) Initial KaseiCoinCrowdsale Contract Compiled:</u>
 
   <p align= "left" width="60">
-  <img width= "100%" src="Starter_Code/Execution_Results/step3_2_deposit_transaction_1.png">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/2_KaseiCoinCrowdsale_contract_compiled.png">
   </p>
 
-  <i>Above, the 'deposit()' function is used to send 1 ETH as Wei from both 'accountOne = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2' & 'accountTwo = 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db' to the contract address wallet. This can be confirmed by the 2 ETH total shown in the JointSavings (contract address ='0XD91...39138') total Deployed Contract ETH Balance at the bottom of the left-sidebar.</i>
+  <i>Basic confirmed compiling of the standard KaseiCoinCrowdsale contract .</i>
   <br>
   <br>
 
-<u> 3.) Testing 'deposit()' Functionality (Transaction 2: Send 10 ETH as Wei):</u>
+<u> 3.) KaseiCoinCrowdsaleDeployer (Pre-Deployment Stage 1):</u>
 
   <p align= "left" width="60">
-  <img width= "100%" src="Starter_Code/Execution_Results/step3_2_deposit_transaction_2.png">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/3_KaseiCoinCrowdsaleDeployer_contract_pre_deploy.png">
   </p>
 
-  <i>Above, the 'deposit()' function is used to send 10 ETH as Wei from both 'accountOne = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2' & 'accountTwo = 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db' to the contract address wallet. This can be confirmed by the 22 ETH total shown in the JointSavings (contract address ='0XD91...39138') total Deployed Contract ETH Balance at the bottom of the left-sidebar.</i>
+  <i>Above, the wallet address of the deployer is also used as the payable address for funds collected at '0x63fEd...Bb1b3' as noted in the Remix IDE 'Account' field. Additionally, note in the 'Deploy' IDE section the 'Name' is set to 'Kasei Coin' and 'Symbol' is set to 'KSIC'. The 'Wallet' is set to '0x63fEd...Bb1b3'.</i>
   <br>
   <br>
 
-<u> 4.) Testing 'deposit()' Functionality (Transaction 3: Send 5 ETH):</u>
+<u> 4.) KaseiCoinCrowdsaleDeployer (Pre-Deployment Stage 2):</u>
 
   <p align= "left" width="60">
-  <img width= "100%" src="Starter_Code/Execution_Results/step3_2_deposit_transaction_3.png">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/4_KaseiCoinCrowdsaleDeployer_contract_pre_deploy_2.png">
   </p>
 
-  <i> Above, the 'deposit()' function is used to send 5 ETH as Wei from both 'accountOne = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2' & 'accountTwo = 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db' to the contract address wallet. This can be confirmed by the 32 ETH total shown in the JointSavings (contract address ='0XD91...39138') total Deployed Contract ETH Balance at the bottom of the left-sidebar. </i>
+  <i> Illustrated above, wallet address '0x63fEd...Bb1b3' is about to spend 0.045382 ETH in order to initiate the 'KaseiCoinCrowdsaleDeployer' contract. This inevitably deploys both the 'KaseiCoin' & 'KaseiCoinCrowdsale' contract, simultaneously. </i>
   <br>
   <br>
 
-<u> 5.) Testing 'withdraw()' Functionality (Withdraw 5 ETH Into 'accountOne'):</u>
+<u> 5.) KaseiCoinCrowdsaleDeployer (Deployment Completed):</u>
 
   <p align= "left" width="60">
-  <img width= "100%" src="Starter_Code/Execution_Results/step3_3_withdraw_5eth_accountOne.png">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/5_KaseiCoinCrowdsaleDeployer_contract_deployed.png">
   </p>
 
-  <i>Above, the 'withdraw()' function is used to send 5 ETH as Wei from the JointSavings contract address into 'accountOne = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2'. This is confirmed by the 'lastToWithDraw' address being 'accountOne = 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2', contract address being reduced by 5 ETH, and the 'lastWithdrawAmount' as 5 ETH.</i> 
+  <i> Note: In the bottom left corner of the Remix IDE 'Deployed Contracts' window, the addresses of both the 'kasei_crowdsale_address' & 'kasei_token_address' can be called to display their addresses (in hash format). This is important since they can be easily copy/pasted via this call command later on.</i> 
   <br>
   <br>
 
-<u> 6.) Testing 'withdraw()' Functionality (Withdraw 10 ETH Into 'accountTwo'):</u>
+<u> 6.) KaseiCoinCrowdsale Deployed:</u>
 
   <p align= "left" width="60">
-  <img width= "100%" src="Starter_Code/Execution_Results/step3_3_withdraw_10eth_accountTwo.png">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/6_KaseiCoinCrowdsale_contract_deploying.png">
   </p>
 
   <i>Above, the 'withdraw()' function is used to send 10 ETH as Wei from the JointSavings contract address into 'accountTwo = 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db'. This is confirmed by the 'lastToWithDraw' address being 'accountTwo = 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db', contract address being reduced further by 10 ETH, and the 'lastWithdrawAmount' as 10 ETH. </i>
