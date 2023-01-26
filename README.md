@@ -236,13 +236,91 @@ vii.) Finally, the updated contracts are finalized by completing the following:
   <img width= "100%" src="Instructions/Evaluation_Evidence/6_KaseiCoinCrowdsale_contract_deploying.png">
   </p>
 
-  <i>Above, the 'withdraw()' function is used to send 10 ETH as Wei from the JointSavings contract address into 'accountTwo = 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db'. This is confirmed by the 'lastToWithDraw' address being 'accountTwo = 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db', contract address being reduced further by 10 ETH, and the 'lastWithdrawAmount' as 10 ETH. </i>
+  <i>Above, 'Account 8' is used to set the 'KaseiCoinCrowdsale' address to 'Wallet = 0x63fEd028f47C364778E050e90ADd905e14ABb1b3'. Additionally, the token contract address is confirmed to be set as '0x83...C681'. </i>
   <br>
   <br>
 
+<u> 7.) KaseiCoinCrowdsale Contract - Sample 10 ETH-to-KSIC Purchase From Wallet '...Bb1b3' (Account 8)</u>
 
+  <p align= "left" width="60">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/7_KaseiCoinCrowdsale_contract_10ETH_KSIC_purchase_from_Bb1b3.png">
+  </p>
+
+  <i> Illustrated above, is a test purchase of 10 ETH from 'Account 8' to the KaseiCrowdsale contract of 'Oxd5E...F2E7'. This is ultimately routed to to the same '...Bb1b3' wallet that the crowdfund contract is attached to, so is not the best illustration of funds transparently transferred and displaying a net difference. The next purchase/transfer example will make this more obvious & transparent. </i>
+  <br>
+  <br>
+
+<u> 8.) KaseiCoinCrowdsale Contract - Sample 25 ETH-to-KSIC Purchase From Wallet '...9b726' (Account 9)</u>
+
+  <p align= "left" width="60">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/8_KaseiCoinCrowdsale_contract_25ETH_KSIC_purchase_from_9b726.png">
+  </p>
+
+  <i> Illustrated above, is a more transparent crowdsale transaction in which wallet '...9b726' (Account 9) purchases 25 ETH worth of KSIC token and is transferred via KaseiCrowdsale contract of 'Oxd5E...F2E7' and routed to the assigned funds holder at wallet '...Bb1b3' (Account 8). </i>
+  <br>
+  <br>
+
+<u> 9.) KaseiCoinCrowdsale Contract - Ganache Purchase Summary</u>
+
+  <p align= "left" width="60">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/9_KaseiCoinCrowdsale_contract_ganache_purchase_summary.png">
+  </p>
+
+  <i> This snapshot of Ganache illustrates the test ETH purchase/transfers for the KaseiCoin crowdsale up until this point. </i>
+  <br>
+  <br>
+
+<u> 10.) KaseiCoinCrowdsale Contract - MetaMask KSIC Total of 25-KSIC on Wallet '...9b726' (Account 9)</u>
+
+  <p align= "left" width="60">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/10_KaseiCoinCrowdsale_contract_Metamask_KSIC_total_on_9b726.png">
+  </p>
+
+  <i> Above, wallet '...9b726' (Account 9) displays the MetaMask holdings of the KSIC token being tested. Account 9 currently holds 25-KSIC tokens, as illustrated in the transaction that took place in part 8, above. </i>
+  <br>
+  <br>
+
+  <u> 11.) KaseiCoinCrowdsale Contract - MetaMask KSIC Total of 25-KSIC on Wallet '...Bb1b3' (Account 8)</u>
+
+  <p align= "left" width="60">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/11_KaseiCoinCrowdsale_contract_Metamask_KSIC_total_on_Bb1b3.png">
+  </p>
+
+  <i> Above, wallet '...Bb1b3' (Account 8) displays the MetaMask holdings of the KSIC token being tested. Account 8 currently holds 10-KSIC tokens, as illustrated in the transaction that took place in part 7, above. </i>
+  <br>
+  <br>
+
+  <u> 12.) KaseiCoinCrowdsale Contract - Optional Pt 1 Contract Functionality Extension</u>
+
+  <p align= "left" width="60">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/12_KaseiCoinCrowdsale_contract_optional_pt_1.png">
+  </p>
+
+  <i> Additional imported contract & function libraries are added to the original KaseiCoinCrowdsale & KaseiCoinCrowdsaleDeployer contracts. Here, functionality is added in order to add crowdsale goal & cap values as well as a start & end time (open & close time) for the crowdsale as customization features. Here, wallet address 0xd81dF3a2d7b003F79c7da4A99b5Ef7e5d9d8770D is employed as the primary token purchaser. </i>
+  <br>
+  <br>
+
+  <u> 13.) KaseiCoinCrowdsale Contract - Optional Pt 2 Contract Functionality Extension</u>
+
+  <p align= "left" width="60">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/13_KaseiCoinCrowdsale_contract_optional_pt_2.png">
+  </p>
+
+  <i> The above snapshot illustrates the final state of the crowdsale contract after all call functions are invoked in order to display the final state. As can be seen, the goal of 300 ETH was reached (via funding from two separate token purchases from wallet 0xd81dF3a2d7b003F79c7da4A99b5Ef7e5d9d8770D (Account 7). It can be noted that the goalReached bool equals true, as does isOpen equals false (indicating the crowdsale closed), as well as capReached equaling true. Note, however, this snapshot was taken before the 'finalized' function has been selected and payed for (with gas). The funds can also be shown to be ultimately sent and routed to wallet 0x948cb6208ec1fD7D7A3521F7EE2A942b0Da19369 (Account 10). </i>
+  <br>
+  <br>
+
+  <u> 14.) KaseiCoinCrowdsale Contract - Optional Pt 3 300-KSIC Withdrawal </u>
+
+  <p align= "left" width="60">
+  <img width= "100%" src="Instructions/Evaluation_Evidence/14_KaseiCoinCrowdsale_contract_optional_300_KSIC_withdrawal_pt_3.png">
+  </p>
+
+  <i> Illustrated above in the MetaMask snapshot, it must be noted that the 300-KSIC tokens were ultimately sent and routed to wallet 0xd81dF3a2d7b003F79c7da4A99b5Ef7e5d9d8770D (Account 7), while wallet 0x948cb6208ec1fD7D7A3521F7EE2A942b0Da19369 (Account 10) was alotted the 300 ETH in return. </i>
+  <br>
+  <br>
 
 
 ## <b>Summary:</b>
 
-In summary, the functionality of the ETH Smart Contract 'JointSavings' proves promising as an alternative decentralized joint savings account compared to a conventional savings account. The main 'JointSavings' contract address was able to act as a centralized store of value for ETH in which two assigned ('accountOne' & 'accountTwo') ETH wallets could interact to deposit funds, but also withdraw funds to their respective wallets out of the main contract account. 
+In summary, the functionality of the KaseiCoin token & KaseiCoinCrowdsale contracts proved successful in their implementation and beta-testing and prove a worthy solution to a separate alternative monetary system that could benefit from a decentralized currency. This could be especially true when tested in experimental & specialized micro-economies.  
